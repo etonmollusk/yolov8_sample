@@ -3,6 +3,9 @@
 RED="\033[0;31m"
 NC="\033[0m"
 
+# Install tensorRT
+sudo apt install -y tensorrt nvidia-tensorrt-dev
+
 ENV_NAME="py310"
 YOLO_POSE_MODEL="yolov8n-pose.pt"
 YOLO_POSE_MODEL_URL="https://github.com/ultralytics/assets/releases/download/v0.0.0/${YOLO_POSE_MODEL}"
