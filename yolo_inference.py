@@ -5,11 +5,13 @@ import cv2
 import urllib.request
 import numpy as np
 import torch
-
+import tensorrt as trt
 
 test_img_url = "https://ultralytics.com/images/bus.jpg"
 yolo_model = "yolov8n-pose.pt"
-trt_enginge = "yolov8n-pose.engine"
+trt_engine = "yolov8n-pose.engine"
+
+TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
 
 def load_test_img_url(url):
@@ -19,7 +21,7 @@ def load_test_img_url(url):
     return cv2.imdecode(arr, -1)
 
 
-def get_model(model_name):
+def get_torch_model(model_name):
     # Load a model
     model = YOLO(model_name)
     
@@ -28,6 +30,10 @@ def get_model(model_name):
 
     return model
 
+def get_trt_model(model_name):
+    with open(model_name, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
+        print("im heere")
+        return runtime.deserialize_cuda_engine(f.read())
 
 def convert_model_to_engine():
     # Load a model
@@ -36,9 +42,19 @@ def convert_model_to_engine():
     model.export(format="engine")
 
 
+def annotate_keypoints(annotator, kpt_results):
+    for r in results:
+        for i in range(r.keypoints.shape[0]):
+            conf = torch.unsqueeze(r.keypoints.conf[i], dim=1)
+            ktps = torch.cat((r.keypoints.xy[i], conf), 1)
+            annotator.kpts(ktps, shape=r.keypoints.orig_shape, kpt_line=True)
+
+
 if __name__ == "__main__":
     img = load_test_img_url(test_img_url)
-    model = get_model(yolo_model)
+
+    #model = get_trt_model(trt_engine)
+    model = get_torch_model(yolo_model)
 
     # Predict with the model
     results = model(img)
@@ -46,12 +62,8 @@ if __name__ == "__main__":
     annotator = Annotator(img)
     
     # View results
-    for r in results:
-        for i in range(r.keypoints.shape[0]):
-            conf = torch.unsqueeze(r.keypoints.conf[i], dim=1)
-            ktps = torch.cat((r.keypoints.xy[i], conf), 1)
-            annotator.kpts(ktps, shape=r.keypoints.orig_shape, kpt_line=True)
-    
+    annotate_keypoints(annotator, results)
+
     img = annotator.result()  
     cv2.imshow('yolov8_detection', img)     
     if cv2.waitKey() & 0xFF == 27:
