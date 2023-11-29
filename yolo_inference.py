@@ -5,7 +5,6 @@ import cv2
 import urllib.request
 import numpy as np
 import torch
-import tensorrt as trt
 
 
 test_img_url = "https://ultralytics.com/images/bus.jpg"
