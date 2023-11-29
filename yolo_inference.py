@@ -35,6 +35,14 @@ def convert_model_to_engine():
     model.export(format="engine")
 
 
+def create_annotator(img_shape):
+    return Annotator(np.zeros(img_shape))
+
+
+def update_annotator_img(annotator, img):
+    annotator.im = img
+
+
 def annotate_keypoints(annotator, kpt_results):
     for r in results:
         for i in range(r.keypoints.shape[0]):
@@ -51,11 +59,11 @@ if __name__ == "__main__":
     # Predict
     results = model(img)
     
-    annotator = Annotator(img)
+    annotator = create_annotator(img.shape)
+    update_annotator_img(annotator, img)
 
     # View results
     annotate_keypoints(annotator, results)
-
     img = annotator.result()  
     cv2.imshow('yolov8_detection', img)     
     if cv2.waitKey() & 0xFF == 27:
