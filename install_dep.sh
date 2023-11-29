@@ -18,7 +18,7 @@ ${python_bin} -m pip install --no-deps ultralytics==8.0.176
 ${python_bin} -m pip install "onnx>=1.12.0"
 
 # Download the pose model
-wget ${YOLO_POSE_MODEL_URL}
-
-echo "Converting the example torch model to tensorRT engine..."
-${yolo_bin} export model=${YOLO_POSE_MODEL} format=engine
+#wget ${YOLO_POSE_MODEL_URL}
+#
+#echo "Converting the example torch model to tensorRT engine..."
+#${yolo_bin} export model=${YOLO_POSE_MODEL} format=engine
