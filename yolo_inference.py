@@ -6,15 +6,10 @@ import urllib.request
 import numpy as np
 import torch
 import tensorrt as trt
-from ultralytics.nn.autobackend import AutoBackend
-from ultralytics.engine.predictor import BasePredictor
 
 
 test_img_url = "https://ultralytics.com/images/bus.jpg"
 yolo_model = "yolov8n-pose.pt"
-trt_engine = "yolov8n-pose.engine"
-
-TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 
 
 def load_test_img_url(url):
@@ -32,22 +27,6 @@ def get_torch_model(model_name):
     model.to("cuda")
 
     return model
-
-
-#def get_trt_model(model_name):
-#    # Load a model
-#    #result = YOLO(model_name).predict(device="cuda")
-#    model = AutoBackend(model_name)
-#    
-#    # Move model to gpu
-#    #model.to("cuda")
-#
-#    return model
-#
-#
-#def load_trt_engine(model_name):
-#    with open(model_name, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
-#        return runtime.deserialize_cuda_engine(f.read())
 
 
 def convert_model_to_engine():
