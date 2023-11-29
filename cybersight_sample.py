@@ -203,9 +203,6 @@ def parse_cam_args():
         action="store_true",
         help="Print all sensor modes and exit",
     )
-#    parser.add_argument(
-#        "--dry-run", action="store_true", help="Just print resulting command"
-#    )
     parser.add_argument(
         "-sm",
         "--sensor-mode",
@@ -420,7 +417,7 @@ if __name__ == "__main__":
         while cap.isOpened():
             ret, frame = cap.read()
             cv2.imshow("Video stream", frame)
-            # if the `q` key was pressed, break from the loop
+            # if the 'q' key was pressed, break from the loop
             if cv2.waitKey(10) & 0xFF == ord("q"):
                 break
     except cv2.error as e:
