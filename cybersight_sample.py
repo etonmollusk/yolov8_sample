@@ -186,6 +186,7 @@ def gstreamer_pipeline(args) -> str:
         f"video/x-raw, format=(string)BGR ! appsink max-buffers=1 drop=True"
     )
 
+
 def print_cybersight_modes():
     print("Showing all available Cybersight sensor modes:\n")
     for sensor, modes in SENSOR_MODES.items():
@@ -193,6 +194,7 @@ def print_cybersight_modes():
         for mode_ind, mode in SENSOR_MODES[sensor].items():
             print(f"    {mode_ind}: {mode.desc}")
         print()
+
 
 def parse_cam_args():
     parser = argparse.ArgumentParser()
@@ -388,7 +390,6 @@ def parse_cam_args():
         traceback.print_exc()
         parser.print_help()
 
-
     if args.show_sensor_modes:
         print_cybersight_modes()
         exit()
@@ -401,10 +402,12 @@ def parse_cam_args():
 
     return args
 
+
 def open_stream(pipeline_str: str) -> cv2.VideoCapture | None:
     print("Opening gstreamer pipeline with:")
-    print(pipeline)
-    return cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
+    print(pipeline_str)
+    return cv2.VideoCapture(pipeline_str, cv2.CAP_GSTREAMER)
+
 
 if __name__ == "__main__":
     args = parse_cam_args()
