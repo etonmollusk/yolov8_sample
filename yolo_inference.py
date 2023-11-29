@@ -44,11 +44,12 @@ def update_annotator_img(annotator, img):
 
 
 def annotate_keypoints(annotator, kpt_results):
-    for r in results:
-        for i in range(r.keypoints.shape[0]):
-            conf = torch.unsqueeze(r.keypoints.conf[i], dim=1)
-            ktps = torch.cat((r.keypoints.xy[i], conf), 1)
-            annotator.kpts(ktps, shape=r.keypoints.orig_shape, kpt_line=True)
+    for r in kpt_results:
+        if r.keypoints.xy.nelement() and r.keypoints.conf != None:
+            for i in range(r.keypoints.shape[0]):
+                conf = torch.unsqueeze(r.keypoints.conf[i], dim=1)
+                ktps = torch.cat((r.keypoints.xy[i], conf), 1)
+                annotator.kpts(ktps, shape=r.keypoints.orig_shape, kpt_line=True)
 
 
 if __name__ == "__main__":
@@ -64,7 +65,7 @@ if __name__ == "__main__":
 
     # View results
     annotate_keypoints(annotator, results)
-    img = annotator.result()  
+    img = annotator.result()
     cv2.imshow('yolov8_detection', img)     
     if cv2.waitKey() & 0xFF == 27:
         pass
