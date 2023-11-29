@@ -6,6 +6,9 @@ import urllib.request
 import numpy as np
 import torch
 import tensorrt as trt
+from ultralytics.nn.autobackend import AutoBackend
+from ultralytics.engine.predictor import BasePredictor
+
 
 test_img_url = "https://ultralytics.com/images/bus.jpg"
 yolo_model = "yolov8n-pose.pt"
@@ -30,15 +33,26 @@ def get_torch_model(model_name):
 
     return model
 
-def get_trt_model(model_name):
-    with open(model_name, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
-        print("im heere")
-        return runtime.deserialize_cuda_engine(f.read())
+
+#def get_trt_model(model_name):
+#    # Load a model
+#    #result = YOLO(model_name).predict(device="cuda")
+#    model = AutoBackend(model_name)
+#    
+#    # Move model to gpu
+#    #model.to("cuda")
+#
+#    return model
+#
+#
+#def load_trt_engine(model_name):
+#    with open(model_name, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
+#        return runtime.deserialize_cuda_engine(f.read())
+
 
 def convert_model_to_engine():
     # Load a model
     model = YOLO(yolo_model)
-
     model.export(format="engine")
 
 
@@ -53,14 +67,13 @@ def annotate_keypoints(annotator, kpt_results):
 if __name__ == "__main__":
     img = load_test_img_url(test_img_url)
 
-    #model = get_trt_model(trt_engine)
     model = get_torch_model(yolo_model)
 
-    # Predict with the model
+    # Predict
     results = model(img)
     
     annotator = Annotator(img)
-    
+
     # View results
     annotate_keypoints(annotator, results)
 
