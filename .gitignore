@@ -1,0 +1,6 @@
+*.pt
+*.jpg
+*.png
+*.engine
+*.onnx
+__pycache__/
