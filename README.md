@@ -13,6 +13,9 @@ Sample code that runs yolov8 pose model on CyberSight camera stream
 # To install YoloV8 dependencies
 $ ./install_dep.sh
 
+# To set up pyenv
+$ ./pyenv_setup.sh -i|-s
+
 # To run scripts
 $ pyenv activate py310
 $ python cybersight_yolo.py
