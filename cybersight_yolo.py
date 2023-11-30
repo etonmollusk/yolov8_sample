@@ -16,6 +16,7 @@ if __name__ == "__main__":
     annotator = yolo_inference.create_annotator(img_shape)
 
     try:
+        cv2.namedWindow("Video stream", cv2.WINDOW_NORMAL)
         while cap.isOpened():
             ret, frame = cap.read()
 
