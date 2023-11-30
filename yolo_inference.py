@@ -65,6 +65,7 @@ if __name__ == "__main__":
     # View results
     annotate_keypoints(annotator, results)
     img = annotator.result()
-    cv2.imshow('yolov8_detection', img)     
+
+    cv2.imshow('yolov8_detection', img)
     if cv2.waitKey() & 0xFF == 27:
         pass
