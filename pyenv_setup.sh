@@ -23,7 +23,7 @@ install_pyenv() {
     fi
     
     # Set up pyenv paths
-    SHELL_CONFIG_FILE="$HOME/bashrc"
+    SHELL_CONFIG_FILE="$HOME/.bashrc"
     PYENV_CMD_TITLE="# pyenv"
     PYENV_CMD1="export PYENV_ROOT=\"\$HOME/.pyenv\""
     PYENV_CMD2="command -v pyenv >/dev/null || export PATH=\"\$PYENV_ROOT/bin:\$PATH\""
