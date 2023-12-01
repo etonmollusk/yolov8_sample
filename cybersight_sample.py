@@ -422,4 +422,5 @@ if __name__ == "__main__":
                 break
     except cv2.error as e:
         print(e)
-        print("Unable to open window for showing stream preview. Is a display available?")
+        if "Can't initialize GTK backend" in str(e):
+            print("Unable to open window for showing stream preview. Is a display available?")
