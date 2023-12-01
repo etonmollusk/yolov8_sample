@@ -3,6 +3,7 @@
 Sample code that runs yolov8 pose model on CyberSight camera stream 
 
 ## Scripts
+- pyenv_setup.sh: a shell script that installs or sets up a pyenv environment
 - install_dep.sh: a shell script that installs YoloV8 dependencies
 - yolo_inference.py: a script that has function wrappers and a sample yolov8 test on an example image
 - cybersight_sample.py: an example script that gets a continuous image stream from the cybersight camera using gstreamer
