@@ -1,6 +1,6 @@
 # friendly-fortnight
 
-Sample code that runs yolov8 pose model on CyberSight camera stream 
+Sample code that runs yolov8 pose model on CyberSight camera stream
 
 ## Scripts
 - pyenv_setup.sh: a shell script that installs or sets up a pyenv environment
