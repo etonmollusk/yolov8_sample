@@ -105,7 +105,6 @@ def blob(im: np.ndarray, return_seg: bool = False) -> Union[np.ndarray, Tuple]:
     im = im.transpose([2, 0, 1])
     im = im[np.newaxis, ...]
     im = np.ascontiguousarray(im).astype(np.float32) / 255
-    im = torch.from_numpy(im)
     if return_seg:
         return im, seg
     else:
